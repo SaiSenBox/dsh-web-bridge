@@ -4,6 +4,8 @@
 
 `@saisenbox/dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
 
+**Import in one step: drag a web conversation from the sidebar onto your target workspace and drop it.** The history and accessible images and files come along, so you can keep chatting in the workspace without copying and pasting everything.
+
 I built it to stop copying context between two windows. Open a web conversation when you want to stay on the web account; drag it into a workspace when you want your local agent to take over.
 
 This is an **unofficial plugin by SaiSenBox**, not a DeepSeek product and not the similarly named `dsh-deepseek-web` npm package. It uses private web endpoints that can change without notice.
