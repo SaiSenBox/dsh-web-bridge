@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import test from 'node:test';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, basename, join, relative, resolve } from 'node:path';
 import { apply } from '../lib/index.js';
@@ -380,7 +380,8 @@ test('imports persist original image and file bytes as native attachments on the
   const report = (await response.json()).attachmentReport;
   assert.equal(report.found, 2); assert.equal(report.imported, 2); assert.deepEqual(report.failures, []);
   assert.equal(report.workspaceSaved, 2); assert.deepEqual(report.workspaceFailures, []);
-  assert.ok(!relative(app.cwd, report.workspaceDirectory).startsWith('..'));
+  // Windows runners may give TEMP an 8.3 alias; the archive returns realpath.
+  assert.equal(dirname(report.workspaceDirectory), join(await realpath(app.cwd), 'deepseek-web-attachments'));
   assert.deepEqual(await readFile(join(app.cwd, report.workspaceFiles[0].path)), image);
   assert.deepEqual(await readFile(join(app.cwd, report.workspaceFiles[1].path)), document);
   assert.equal(imageReads, 1); assert.equal(fileReads, 1); assert.equal(disposed, 1);
@@ -500,7 +501,7 @@ test('drag-import workspaceId stores originals in that workspace, never the defa
   const result = await response.json();
   assert.equal(response.status, 200);
   assert.equal(app.creates[0].meta.cwd, target);
-  assert.ok(result.attachmentReport.workspaceDirectory.startsWith(join(target, 'deepseek-web-attachments')));
+  assert.equal(dirname(result.attachmentReport.workspaceDirectory), join(await realpath(target), 'deepseek-web-attachments'));
   assert.equal(result.attachmentReport.workspaceSaved, 2);
   assert.deepEqual(await readFile(join(target, result.attachmentReport.workspaceFiles[0].path)), Buffer.from('original-image'));
 });
