@@ -1,6 +1,6 @@
 # 发布清单
 
-包名：`@saisenbox/dsh-web-bridge`。仓库：`SaiSenBox/dsh-web-bridge`。
+包名：`dsh-web-bridge`。仓库：`SaiSenBox/dsh-web-bridge`。
 源码先上传 GitHub；npm、GitHub Release 与收录 PR 单独发布。本清单不代表这些步骤已经完成。
 
 ## 发布前
@@ -10,11 +10,11 @@
 3. 用演示数据生成截图，逐张检查文字、文件名、路径、Token、浏览器栏和图片内容，再更新根目录 `screenshots.json`。截图仅演示 UI，不应冒充真实账号实测。
 4. 运行 `npm run check`、`npm test`、`npm run verify:package`。CI 在 Ubuntu/Windows、Node 22.19/24 上执行相同检查。
 5. 保持 `package.json`、Host `VERSION`、Client `FALLBACK_VERSION` 与 CHANGELOG 版本一致；在隔离 profile 验证真实 DSH 加载和卸载。不要拿日用 profile 做破坏性测试。
-6. npm 发布后更新中英文 README 中“npm 尚未发布”的说明，再复查所有安装命令。
+6. npm 发布后核对中英文 README 的安装命令、线上版本与包内容一致。
 
 ## npm
 
-先运行 `npm whoami`，确认有权使用 `saisenbox` 作用域。GitHub 用户名不等于 npm 作用域所有权。登录过期时使用 `npm login`；需要二次认证时按浏览器/通行密钥提示操作，不要把 Token 写进仓库或聊天。
+先运行 `npm whoami`，确认登录了有权发布 `dsh-web-bridge` 的 npm 账号。本包不使用作用域，GitHub 作者署名与 npm 登录名可以不同。登录过期时使用 `npm login`；需要二次认证时按浏览器/通行密钥提示操作，不要把 Token 写进仓库或聊天。
 
 ```sh
 npm publish --access public
@@ -23,8 +23,8 @@ npm publish --access public
 `prepublishOnly` 会重跑语法、离线测试和真实 tarball 安装检查；失败就停止。发布后核对：
 
 ```sh
-npm view @saisenbox/dsh-web-bridge version license dist.integrity
-dsh plugin --profile bridge-smoke add @saisenbox/dsh-web-bridge
+npm view dsh-web-bridge version license dist.integrity
+dsh plugin --profile bridge-smoke add dsh-web-bridge
 dsh --profile bridge-smoke --dump-config
 ```
 

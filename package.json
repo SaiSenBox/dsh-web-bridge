@@ -1,5 +1,5 @@
 {
-  "name": "@saisenbox/dsh-web-bridge",
+  "name": "dsh-web-bridge",
   "version": "0.4.5",
   "type": "module",
   "description": "Browse and continue DeepSeek web conversations in DSH, or import them with attachments into a workspace.",

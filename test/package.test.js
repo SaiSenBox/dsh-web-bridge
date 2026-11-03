@@ -8,12 +8,12 @@ const pkg = JSON.parse(await read('package.json'));
 const artifacts = { patch: await read('cordis.patch.yml'), client: await read('lib/client.js'),
   host: await read('lib/index.js'), license: await read('LICENSE'), notices: await read('THIRD_PARTY_NOTICES.md') };
 
-test('public manifest, relative bundle and browser identity agree after the scoped rename', () => {
+test('public manifest, relative bundle and browser identity agree after the package rename', () => {
   validateManifest(pkg);
   validateArtifacts(pkg, artifacts);
 });
 
-test('release guard rejects private packages, wrong scope, missing DSH compatibility and license drift', () => {
+test('release guard rejects private packages, stale names, missing DSH compatibility and license drift', () => {
   for (const change of [{ private: true }, { name: 'dsh-deepseek-web' }, { engines: { node: pkg.engines.node } }, { license: 'MIT' }]) {
     assert.throws(() => validateManifest({ ...pkg, ...change }));
   }

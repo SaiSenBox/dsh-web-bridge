@@ -41,7 +41,7 @@ Remote opt-in is **not authentication**. DSH's web surface must be protected sep
 
 - `cordis.patch.yml`: a top-level YAML patch array inserting row `deepseek-web`. The relative Host path is anchored to the bundle patch, allowing old local aliases to resolve after the npm rename.
 - `lib/index.js`: Node Host with injected DSH services; no imports of DSH singleton packages.
-- `lib/client.js`: browser factory registered as `@saisenbox/dsh-web-bridge`, matching the package name. Uses React and native DSH primitives supplied by the client runtime.
+- `lib/client.js`: browser factory registered as `dsh-web-bridge`, matching the package name. Uses React and native DSH primitives supplied by the client runtime.
 - `locale/`: public metadata. UI registers Chinese/English strings with DSH's locale service.
 - Existing `dsh-deepseek-web.*` browser storage keys and `/deepseek-web` routes deliberately remain stable for migration. These are internal compatibility identifiers, not the public npm package name.
 

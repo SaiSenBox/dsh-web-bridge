@@ -2,7 +2,7 @@
 
 中文 | [English](README.en.md)
 
-`@saisenbox/dsh-web-bridge`：在 DeepSeek Harness 里接着聊网页端的对话，也能把历史和附件一起搬进工作区。
+`dsh-web-bridge`：在 DeepSeek Harness 里接着聊网页端的对话，也能把历史和附件一起搬进工作区。
 
 **导入就一步：把左侧网页会话拖到目标工作区，松手即可导入。** 历史消息和可读取的图片、文件会一起带过去，不用来回复制粘贴，导入后就能在工作区接着聊。
 
@@ -44,32 +44,32 @@
 
 需要 DSH **0.2.1-rc.2 或更新的兼容 0.2.x 版本**。本机集成验证基于官方独立桌面版 0.2.1-rc.2；声明的范围是 `>=0.2.1-rc.2 <0.3.0`，不代表已经逐个测试所有后续版本。外置 Node 需要 `^22.19.0 || >=24.0.0`，桌面版使用自带运行时。
 
-先从你的实际 profile 安装 GitHub 源码（纯 JavaScript，无须额外构建）：
+从你的实际 profile 安装 npm 包：
 
 ```sh
 # 独立桌面版
-dsh plugin --profile desktop add github:SaiSenBox/dsh-web-bridge
+dsh plugin --profile desktop add dsh-web-bridge
 
 # Web profile，按实际使用的 profile 二选一
-dsh plugin --profile web add github:SaiSenBox/dsh-web-bridge
+dsh plugin --profile web add dsh-web-bridge
 ```
 
-npm **尚未发布**。发布后才可使用：
+也可以安装 GitHub 源码（纯 JavaScript，无须额外构建）：
 
 ```sh
-dsh plugin --profile desktop add @saisenbox/dsh-web-bridge
+dsh plugin --profile desktop add github:SaiSenBox/dsh-web-bridge
 ```
 
 本地开发或安装下载好的包：
 
 ```sh
 dsh plugin --profile desktop add ./dsh-web-bridge
-# 或：dsh plugin --profile desktop add ./saisenbox-dsh-web-bridge-0.4.5.tgz
+# 或：dsh plugin --profile desktop add ./dsh-web-bridge-0.4.5.tgz
 ```
 
 装好或更新后，**完全退出 DSH，包括托盘进程，再重新打开**。只刷新页面不会更新 Host 接口。
 
-卸载：`dsh plugin --profile desktop remove @saisenbox/dsh-web-bridge`。换成你的实际 profile；卸载不会删除已导入的会话或工作区文件。
+卸载：`dsh plugin --profile desktop remove dsh-web-bridge`。换成你的实际 profile；卸载不会删除已导入的会话或工作区文件。
 
 旧本地开发目录无需改名。插件保留 `deepseek-web` 配置行 ID、接口和浏览器偏好键；相对入口也兼容旧的本地链接。迁移到新包时，应先移除旧 bundle，再安装新包，**不要同时启用两份**。卸载旧 bundle 时请核对它确实是你以前安装的本项目，而不是其他作者的同名包。
 

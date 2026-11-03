@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-`@saisenbox/dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
+`dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
 
 **Import in one step: drag a web conversation from the sidebar onto your target workspace and drop it.** The history and accessible images and files come along, so you can keep chatting in the workspace without copying and pasting everything.
 
@@ -44,18 +44,18 @@ Connection settings in one place, following the DSH theme.
 
 Requires a compatible DSH 0.2.x release, starting at **0.2.1-rc.2** (`>=0.2.1-rc.2 <0.3.0`). Integration was checked against the official standalone desktop 0.2.1-rc.2, not every later release in the range. External Node installations need `^22.19.0 || >=24.0.0`; Desktop supplies its own runtime.
 
-Install from GitHub into your actual profile. The package ships plain JavaScript and needs no build step:
+Install the npm package into your actual profile:
+
+```sh
+dsh plugin --profile desktop add dsh-web-bridge
+# For the web profile instead:
+dsh plugin --profile web add dsh-web-bridge
+```
+
+Or install from GitHub. The package ships plain JavaScript and needs no build step:
 
 ```sh
 dsh plugin --profile desktop add github:SaiSenBox/dsh-web-bridge
-# For the web profile instead:
-dsh plugin --profile web add github:SaiSenBox/dsh-web-bridge
-```
-
-npm is **not published yet**. After publication, use:
-
-```sh
-dsh plugin --profile desktop add @saisenbox/dsh-web-bridge
 ```
 
 Local checkout or tarball:
@@ -63,12 +63,12 @@ Local checkout or tarball:
 ```sh
 dsh plugin --profile desktop add ./dsh-web-bridge
 # Or a downloaded tarball:
-dsh plugin --profile desktop add ./saisenbox-dsh-web-bridge-0.4.5.tgz
+dsh plugin --profile desktop add ./dsh-web-bridge-0.4.5.tgz
 ```
 
 **Fully quit DSH, including the tray process, and reopen it after installing or updating.** A page refresh does not reload the Host routes.
 
-Uninstall with `dsh plugin --profile desktop remove @saisenbox/dsh-web-bridge`, substituting your actual profile. Imported sessions and workspace files are not deleted.
+Uninstall with `dsh plugin --profile desktop remove dsh-web-bridge`, substituting your actual profile. Imported sessions and workspace files are not deleted.
 
 The old local checkout can keep its directory name. The patch row ID, routes and browser preference keys remain stable, and the relative entry supports old local links. When migrating, remove the old bundle before adding the new one; **do not enable both copies**. Check that the legacy bundle is this project's old local install, not another author's similarly named package.
 
