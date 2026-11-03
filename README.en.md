@@ -1,8 +1,8 @@
-# DeepSeek Web Bridge
+# DeepSeek Web Bridge · SaiSenBox
 
 [中文](README.md) | English
 
-`@xueray/dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
+Bring DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
 
 **Import in one step: drag a web conversation from the sidebar onto your target workspace and drop it.** The history and accessible images and files come along, so you can keep chatting in the workspace without copying and pasting everything.
 
@@ -42,7 +42,7 @@ Connection settings in one place, following the DSH theme.
 
 Requires a compatible DSH 0.2.x release, starting at **0.2.1-rc.2** (`>=0.2.1-rc.2 <0.3.0`). Integration was checked against the official standalone desktop 0.2.1-rc.2, not every later release in the range. External Node installations need `^22.19.0 || >=24.0.0`; Desktop supplies its own runtime.
 
-Install the npm package into your actual profile:
+The npm package is `@xueray/dsh-web-bridge`. Install it into your actual profile:
 
 ```sh
 dsh plugin --profile desktop add @xueray/dsh-web-bridge
