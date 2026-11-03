@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-`dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
+`@xueray/dsh-web-bridge` brings DeepSeek web conversations into DeepSeek Harness: keep chatting on the web account, or move a conversation and its attachments into a DSH workspace.
 
 **Import in one step: drag a web conversation from the sidebar onto your target workspace and drop it.** The history and accessible images and files come along, so you can keep chatting in the workspace without copying and pasting everything.
 
@@ -45,9 +45,9 @@ Requires a compatible DSH 0.2.x release, starting at **0.2.1-rc.2** (`>=0.2.1-rc
 Install the npm package into your actual profile:
 
 ```sh
-dsh plugin --profile desktop add dsh-web-bridge
+dsh plugin --profile desktop add @xueray/dsh-web-bridge
 # For the web profile instead:
-dsh plugin --profile web add dsh-web-bridge
+dsh plugin --profile web add @xueray/dsh-web-bridge
 ```
 
 Or install from GitHub. The package ships plain JavaScript and needs no build step:
@@ -61,12 +61,12 @@ Local checkout or tarball:
 ```sh
 dsh plugin --profile desktop add ./dsh-web-bridge
 # Or a downloaded tarball:
-dsh plugin --profile desktop add ./dsh-web-bridge-0.4.5.tgz
+dsh plugin --profile desktop add ./xueray-dsh-web-bridge-0.4.5.tgz
 ```
 
 **Fully quit DSH, including the tray process, and reopen it after installing or updating.** A page refresh does not reload the Host routes.
 
-Uninstall with `dsh plugin --profile desktop remove dsh-web-bridge`, substituting your actual profile. Imported sessions and workspace files are not deleted.
+Uninstall with `dsh plugin --profile desktop remove @xueray/dsh-web-bridge`, substituting your actual profile. Imported sessions and workspace files are not deleted.
 
 The old local checkout can keep its directory name. The patch row ID, routes and browser preference keys remain stable, and the relative entry supports old local links. When migrating, remove the old bundle before adding the new one; **do not enable both copies**. Check that the legacy bundle is this project's old local install, not another author's similarly named package.
 

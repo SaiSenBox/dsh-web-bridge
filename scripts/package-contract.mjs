@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 
-export const packageName = 'dsh-web-bridge';
+export const packageName = '@xueray/dsh-web-bridge';
 export const licenseId = 'PolyForm-Noncommercial-1.0.0';
 
 export function validateManifest(pkg) {

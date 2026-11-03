@@ -14,7 +14,7 @@ test('public manifest, relative bundle and browser identity agree after the pack
 });
 
 test('release guard rejects private packages, stale names, missing DSH compatibility and license drift', () => {
-  for (const change of [{ private: true }, { name: 'dsh-deepseek-web' }, { engines: { node: pkg.engines.node } }, { license: 'MIT' }]) {
+  for (const change of [{ private: true }, { name: 'dsh-deepseek-web' }, { name: 'dsh-web-bridge' }, { engines: { node: pkg.engines.node } }, { license: 'MIT' }]) {
     assert.throws(() => validateManifest({ ...pkg, ...change }));
   }
 });

@@ -1,6 +1,6 @@
 # 发布清单
 
-包名：`dsh-web-bridge`。仓库：`SaiSenBox/dsh-web-bridge`。
+包名：`@xueray/dsh-web-bridge`。仓库：`SaiSenBox/dsh-web-bridge`。
 源码先上传 GitHub；npm、GitHub Release 与收录 PR 单独发布。本清单不代表这些步骤已经完成。
 
 ## 发布前
@@ -14,7 +14,7 @@
 
 ## npm
 
-先运行 `npm whoami`，确认登录了有权发布 `dsh-web-bridge` 的 npm 账号。本包不使用作用域，GitHub 作者署名与 npm 登录名可以不同。登录过期时使用 `npm login`；需要二次认证时按浏览器/通行密钥提示操作，不要把 Token 写进仓库或聊天。
+先运行 `npm whoami`，确认登录了有权发布 `@xueray/dsh-web-bridge` 的 npm 账号。本包使用 npm 账号 `xueray` 的作用域，GitHub 作者署名仍为 SaiSenBox；两者不必相同。登录过期时使用 `npm login`；需要二次认证时按浏览器/通行密钥提示操作，不要把 Token 写进仓库或聊天。
 
 ```sh
 npm publish --access public
@@ -23,8 +23,8 @@ npm publish --access public
 `prepublishOnly` 会重跑语法、离线测试和真实 tarball 安装检查；失败就停止。发布后核对：
 
 ```sh
-npm view dsh-web-bridge version license dist.integrity
-dsh plugin --profile bridge-smoke add dsh-web-bridge
+npm view @xueray/dsh-web-bridge version license dist.integrity
+dsh plugin --profile bridge-smoke add @xueray/dsh-web-bridge
 dsh --profile bridge-smoke --dump-config
 ```
 
