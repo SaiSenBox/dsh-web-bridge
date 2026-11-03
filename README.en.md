@@ -22,8 +22,6 @@ Opening a web conversation writes replies back to the web account. Continuing an
 
 ## Screenshots
 
-Offline demos of the plugin's real components and native theme inside a preview shell. All messages, attachments and account hints are synthetic, not captures of a signed-in account.
-
 Keep chatting in DSH, with images and files in context.
 
 ![Web chat with demo image and file attachments](assets/screenshots/01-web-chat.png)
