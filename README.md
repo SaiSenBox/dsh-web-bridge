@@ -20,6 +20,12 @@
 
 **两种“继续聊”不是一回事：**点击网页会话，回复会写回网页账号；拖入工作区后，继续对话使用 DSH 当前默认模型，不会写回原网页会话。
 
+## 25 秒演示
+
+[![DeepSeek 会话桥：网页聊一半，拖进 DSH 接着做](https://raw.githubusercontent.com/SaiSenBox/dsh-web-bridge/main/assets/promo/cover.png)](https://github.com/SaiSenBox/dsh-web-bridge/blob/main/assets/promo/demo.mp4)
+
+[下载视频（MP4）](https://raw.githubusercontent.com/SaiSenBox/dsh-web-bridge/main/assets/promo/demo.mp4) · [素材署名与许可](https://github.com/SaiSenBox/dsh-web-bridge/tree/main/assets/promo#素材署名)
+
 ## 看看界面
 
 不用来回复制上下文，在 DSH 里直接接着聊。

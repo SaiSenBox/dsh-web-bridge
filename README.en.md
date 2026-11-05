@@ -20,6 +20,12 @@ This is an **unofficial plugin by SaiSenBox**, not a DeepSeek product and not th
 
 Opening a web conversation writes replies back to the web account. Continuing an **imported** local conversation uses your DSH default model and does not write back to the original web thread.
 
+## 25-second demo
+
+[![DeepSeek Web Bridge: drag a web conversation into a DSH workspace](https://raw.githubusercontent.com/SaiSenBox/dsh-web-bridge/main/assets/promo/cover.png)](https://github.com/SaiSenBox/dsh-web-bridge/blob/main/assets/promo/demo.mp4)
+
+[Download the video (MP4, Chinese captions)](https://raw.githubusercontent.com/SaiSenBox/dsh-web-bridge/main/assets/promo/demo.mp4) · [Media credits and licenses](https://github.com/SaiSenBox/dsh-web-bridge/tree/main/assets/promo#credits)
+
 ## Screenshots
 
 Keep chatting in DSH, with images and files in context.
