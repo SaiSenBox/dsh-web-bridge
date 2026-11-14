@@ -67,7 +67,7 @@ Local checkout or tarball:
 ```sh
 dsh plugin --profile desktop add ./dsh-web-bridge
 # Or a downloaded tarball:
-dsh plugin --profile desktop add ./xueray-dsh-web-bridge-0.4.5.tgz
+dsh plugin --profile desktop add ./xueray-dsh-web-bridge-0.4.6.tgz
 ```
 
 **Fully quit DSH, including the tray process, and reopen it after installing or updating.** A page refresh does not reload the Host routes.

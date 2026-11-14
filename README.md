@@ -68,7 +68,7 @@ dsh plugin --profile desktop add github:SaiSenBox/dsh-web-bridge
 
 ```sh
 dsh plugin --profile desktop add ./dsh-web-bridge
-# 或：dsh plugin --profile desktop add ./xueray-dsh-web-bridge-0.4.5.tgz
+# 或：dsh plugin --profile desktop add ./xueray-dsh-web-bridge-0.4.6.tgz
 ```
 
 装好或更新后，**完全退出 DSH，包括托盘进程，再重新打开**。只刷新页面不会更新 Host 接口。
