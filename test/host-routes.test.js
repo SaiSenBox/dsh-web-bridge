@@ -455,14 +455,17 @@ test('seed fallback keeps the downloaded native attachments in its context messa
   t.mock.method(DeepSeekWebApi.prototype, 'getImage', async () => ({ bytes: Buffer.from('fixture'), contentType: 'image/png' }));
   t.mock.method(DeepSeekWebApi.prototype, 'openFile', async () => { throw new Error('expired'); });
   const followups = [];
+  const created = [];
   const app = await host(t, { attachments: { async saveImage() { return { attachmentId: 'sha256:image' }; }, async saveFileStream() {} },
     agents: { async create(options) {
+      created.push(options.sessionId);
       if (options.seed) throw new Error('seed unsupported');
       return { agent: { id: options.sessionId, session: { append() {} }, followup(message) { followups.push(message); } }, dispose() {} };
     } },
   });
   const result = await (await app.post('/deepseek-web/import', { sessionId: 'web' })).json();
   assert.equal(result.mode, 'message');
+  assert.match(created.at(-1), /^session-[0-9a-f-]{36}$/, 'imported Sessions must use the Host id shape');
   assert.equal(followups[0].content[0].attachment.attachmentId, 'sha256:image');
   assert.match(followups[0].content.at(-1).text, /附件未导入：notes.bin/);
 });
