@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import test from 'node:test';
-import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readdir, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, basename, join, relative, resolve } from 'node:path';
 import { apply } from '../lib/index.js';
@@ -49,6 +49,51 @@ async function host(t, overrides = {}) {
 }
 
 const transcript = [{ role: 'user', text: 'Vue template: {{foo}}' }, { role: 'assistant', text: 'Use {{bar}}.' }];
+
+test('composer mode writes preserve the untouched switch across simultaneous requests and new Host instances', async (t) => {
+  const anchor = await host(t);
+  const prefDir = join(anchor.cwd, 'composer-modes');
+  const previous = process.env.DSH_DEEPSEEK_WEB_PREFS_DIR;
+  process.env.DSH_DEEPSEEK_WEB_PREFS_DIR = prefDir;
+  t.after(() => {
+    if (previous === undefined) delete process.env.DSH_DEEPSEEK_WEB_PREFS_DIR;
+    else process.env.DSH_DEEPSEEK_WEB_PREFS_DIR = previous;
+  });
+  const desktop = await host(t);
+  const web = await host(t);
+  const status = async (app) => (await fetch(app.base + '/deepseek-web/status')).json();
+  const put = (app, mode, enabled) => app.post('/deepseek-web/composer-preference', { mode, enabled });
+  const initial = await status(desktop);
+  assert.equal(initial.capabilities.composerPreferences, true);
+  assert.equal(initial.thinkingDefault, false);
+  assert.equal(initial.searchDefault, false);
+  assert.deepEqual(initial.composerMode, {});
+  assert.equal((await put(desktop, 'thinking', true)).status, 200);
+  assert.deepEqual((await status(web)).composerMode, { thinking: true });
+
+  for (let i = 0; i < 8; i++) {
+    const enabled = i % 2 === 0;
+    const responses = await Promise.all([put(desktop, 'thinking', enabled), put(web, 'search', !enabled)]);
+    assert.deepEqual(responses.map(r => r.status), [200, 200]);
+    assert.deepEqual((await status(desktop)).composerMode, { thinking: enabled, search: !enabled });
+  }
+  const restarted = await host(t);
+  assert.notEqual(restarted.base, desktop.base);
+  assert.deepEqual((await status(restarted)).composerMode, { thinking: false, search: true });
+  assert.deepEqual((await readdir(prefDir)).sort(), ['search', 'thinking']);
+
+  assert.equal((await put(restarted, 'search', 'false')).status, 400);
+  assert.equal((await put(restarted, 'unknown', true)).status, 400);
+  assert.equal((await fetch(restarted.base + '/deepseek-web/composer-preference', {
+    method: 'POST', headers: { 'content-type': 'text/plain' }, body: JSON.stringify({ mode: 'search', enabled: false }),
+  })).status, 415);
+  assert.equal((await fetch(restarted.base + '/deepseek-web/composer-preference', {
+    method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://other.test' }, body: JSON.stringify({ mode: 'search', enabled: false }),
+  })).status, 403);
+  assert.deepEqual((await status(restarted)).composerMode, { thinking: false, search: true });
+  await writeFile(join(prefDir, 'thinking'), 'broken preference');
+  assert.deepEqual((await status(restarted)).composerMode, { search: true });
+});
 
 test('image route returns same-origin bytes privately and reports loaded capabilities', async (t) => {
   const bytes = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);

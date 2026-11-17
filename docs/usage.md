@@ -8,6 +8,11 @@
 
 Context injection into an existing local session is text-only (maximum 200,000 characters). Importing a workspace/new session migrates supported attachments and preserves reasoning and source references. The web chat retains parallel answer branches; import and Markdown use the web session's selected mainline rather than flattening sibling answers into one conversation.
 
+## 网页聊天与预览偏好
+
+- 思考模式和联网搜索初始关闭。你主动切换后，选择会保存在 `$DSH_HOME/dsh-web-bridge/composer-modes/`（默认 `~/.dsh/dsh-web-bridge/composer-modes/`），同一 DSH 数据目录下的网页聊天共用，重启换端口后仍适用。不保存消息或账号信息。旧后台没有此接口时，只在同一个浏览器来源记住选择。
+- 在「浏览与导入」页选中会话后，可用标题栏箭头收起会话列表，预览和导入按钮仍然可用；再次打开该页时默认展开。侧栏会话列表与拖拽导入不受影响。
+
 ## 附件保存在哪里
 
 - 工作区原文件：`<workspace>/deepseek-web-attachments/<web-session-id>-<random-suffix>/`。每次导入新建子目录，同名文件避让，不覆盖已有文件；消息记录相对路径。
