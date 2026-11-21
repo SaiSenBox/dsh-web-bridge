@@ -47,6 +47,7 @@ test("two complete exchanges produce balanced turn/step events", () => {
     [
       "turn/start",
       "step/start",
+      "system/message",
       "user/message",
       "assistant/message",
       "step/end",
@@ -61,6 +62,15 @@ test("two complete exchanges produce balanced turn/step events", () => {
   );
   const turns = events.filter((event) => event.type === "turn/start").map((event) => event.data.turn);
   assert.deepEqual(turns, [1, 2]);
+  const firstSurface = events.find((event) => SURFACE_TYPES.has(event.type));
+  assert.equal(firstSurface.type, "system/message");
+  assert.equal(firstSurface.surfaceOp, "append");
+  assert.equal(firstSurface.data.turn, 1);
+  assert.equal(firstSurface.data.step, 1);
+  assert.equal(firstSurface.data.message.role, "system");
+  assert.deepEqual(firstSurface.data.message.content, []);
+  assert.deepEqual(firstSurface.data.message.source, { kind: "system-prompt" });
+  assert.equal(events.filter((event) => event.type === "system/message").length, 1);
   const assistant = events.find((event) => event.type === "assistant/message");
   assert.deepEqual(assistant.data.message.source, {
     kind: "model",
@@ -95,17 +105,30 @@ test("transcript ending with a user message closes the open turn", () => {
   });
 });
 
-test("transcript starting with an assistant message stays structurally valid", () => {
+test("assistant-first and consecutive assistant messages have valid step owners and keep their order", () => {
   const events = buildSeed(
     [
       { role: "assistant", text: "导入的开场白" },
+      { role: "assistant", text: "第二条助手消息" },
       { role: "user", text: "继续" }
     ],
     "p",
     "m"
   );
   assertSeedShape(events);
-  assert.equal(events[0].type, "assistant/message");
+  const surface = events.filter((event) => SURFACE_TYPES.has(event.type));
+  assert.deepEqual(surface.map((event) => event.type), [
+    "system/message", "assistant/message", "assistant/message", "user/message"
+  ]);
+  for (const [index, assistant] of surface.slice(1, 3).entries()) {
+    const start = events[assistant.seq - (index === 0 ? 2 : 1)];
+    assert.equal(start.type, "step/start");
+    assert.deepEqual(start.data, { turn: index + 1, step: 1 });
+    assert.equal(assistant.data.turn, start.data.turn);
+    assert.equal(assistant.data.step, start.data.step);
+    assert.equal(events[assistant.seq + 1].type, "step/end");
+    assert.equal(events[assistant.seq + 2].type, "turn/end");
+  }
 });
 
 test("toTranscript keeps only user/assistant text and trims blanks", () => {
